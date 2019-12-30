@@ -8,8 +8,12 @@ public class MainInteractor {
     private int number;
     private Context context;
     private PreferencesHelper preferenceHelper = new PreferencesHelper();
+
     public MainInteractor(Context context) {
         this.context = context;
+    }
+
+    public MainInteractor() {
     }
 
     public int getNumberStart() {
@@ -18,8 +22,14 @@ public class MainInteractor {
         return number;
     }
 
+    private int calcNumberStartApp(){
+        ++number;
+       return number;
+    }
+
     private void setNumberStart() {
-        preferenceHelper.setNumberStart(KEY_START, ++number, context);
+        number = calcNumberStartApp();
+        preferenceHelper.setNumberStart(KEY_START, number, context);
     }
 
     public boolean showDialog(int number){
