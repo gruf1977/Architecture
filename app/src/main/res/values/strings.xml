@@ -3,4 +3,7 @@
     <string name="rate_proposal_message">Написать отзыв</string>
     <string name="rate_proposal_yes">Да</string>
     <string name="rate_proposal_no">Нет</string>
+    <string name="flick_api_key">cd28395188525ad3e3ac6bf6833b062e</string>
+    <string name="flick_host" translatable="false">https://api.flickr.com</string>
+    <string name="find">Find</string>
 </resources>

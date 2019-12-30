@@ -3,19 +3,75 @@ package com.example.myarchitecture.ui;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.example.myarchitecture.R;
 import com.example.myarchitecture.interactor.MainInteractor;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainPresenter.View{
 
     private MainPresenter presenter;
+    private RecyclerView recyclerView;
+    private EditText inputText;
+    private Button btnFind;
+    private ProgressBar progress_circular;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initView();
         presenter = createPresenter();
+    }
+
+    private void initView() {
+        recyclerView = findViewById(R.id.recyclerPhoto);
+        inputText = findViewById(R.id.inputText);
+        btnFind = findViewById(R.id.btnFind);
+        progress_circular = findViewById(R.id.progress_circular);
+        btnFind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                presenter.findImageByText(String.valueOf(inputText.getText()));
+            }
+        });
+    }
+
+    public void progressVisible(Boolean isActive) {
+        if (isActive) {
+            progress_circular.setVisibility(View.VISIBLE);
+        } else {
+            progress_circular.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void btnFindIsActive(Boolean isVisible) {
+        if (isVisible) {
+            btnFind.setVisibility(View.VISIBLE);
+        } else {
+            btnFind.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    public void recyclerViewVisible(Boolean isVisible, List photos) {
+        if (isVisible) {
+            recyclerView.setVisibility(View.VISIBLE);
+            GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2,
+                    RecyclerView.VERTICAL, false);
+            layoutManager.setReverseLayout(true);
+            PhotoRecyclerAdapter adapter = new PhotoRecyclerAdapter((ArrayList) photos);
+            recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(layoutManager);
+        } else {
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
@@ -26,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
 
     private MainPresenter createPresenter() {
         MainInteractor mainInteractor = new  MainInteractor(this.getApplicationContext());
-        return new MainPresenterImpl(this, mainInteractor);
+        return new MainPresenterImpl(this, mainInteractor, this.getApplicationContext());
     }
 
     private AlertDialog createProposalDialog() {
