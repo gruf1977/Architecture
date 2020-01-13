@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         });
     }
 
-    public void progressVisible(Boolean isActive) {
+    public void progressVisible(boolean isActive) {
         if (isActive) {
             progress_circular.setVisibility(View.VISIBLE);
         } else {
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         }
     }
 
-    public void btnFindIsActive(Boolean isVisible) {
+    public void btnFindIsActive(boolean isVisible) {
         if (isVisible) {
             btnFind.setVisibility(View.VISIBLE);
         } else {
@@ -60,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements MainPresenter.Vie
         }
     }
 
-    public void recyclerViewVisible(Boolean isVisible, List photos) {
+    public void recyclerViewVisible(boolean isVisible, List photos) {
         if (isVisible) {
             recyclerView.setVisibility(View.VISIBLE);
             GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2,
                     RecyclerView.VERTICAL, false);
-            layoutManager.setReverseLayout(true);
+            layoutManager.setReverseLayout(false);
             PhotoRecyclerAdapter adapter = new PhotoRecyclerAdapter((ArrayList) photos);
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(layoutManager);
